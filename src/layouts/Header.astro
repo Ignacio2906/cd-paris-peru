@@ -1,0 +1,211 @@
+---
+import Icon from "astro-icon";
+import { IconFontAwesome } from "../components";
+import Drawer from "./Drawer";
+---
+
+<header id="header-item" class="header-relative">
+  <!-- ================= MOBILE ================= -->
+  <div class="img-logo">
+    <a href="/" rel="noreferrer">
+      <img src="./images/logo.webp" alt="Logo Paris Peru" />
+    </a>
+  </div>
+
+  <!-- ================= DESKTOP ================= -->
+  <nav class="item-menu">
+    <!-- IZQUIERDA -->
+    <div class="menu-left">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/about-us">Nosotros</a></li>
+
+        <li class="has-submenu">
+          <a href="/sports">Deportes</a>
+          <ul class="submenu">
+            <li><a href="/sports/football">Fútbol</a></li>
+            <li><a href="/sports/swimming">Natación</a></li>
+            <li><a href="/sports/volleyball">Vóley</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- LOGO CENTRO -->
+    <div class="menu-logo">
+      <a href="/" rel="noreferrer">
+        <img src="./images/logo.webp" alt="Logo Paris Peru" />
+      </a>
+    </div>
+
+    <!-- DERECHA -->
+    <div class="menu-right">
+      <ul>
+        <li><a href="/headquarters">Sedes</a></li>
+        <li><a href="/schedule">Horario</a></li>
+        <li><a href="/news">Noticias</a></li>
+
+        <li>
+          <a href="/contact" class="anchor-icon">
+            <Icon pack="mdi" name="phone" size={19} />
+            Contacto
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- BOTÓN MOBILE -->
+  <div class="item-menu-button">
+    <Drawer client:visible>
+      <IconFontAwesome
+        aria-label="barramenu"
+        width="30px"
+        color="#ffffff"
+        path="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
+      />
+    </Drawer>
+  </div>
+</header>
+
+<style lang="scss">
+/* ================= MOBILE ================= */
+.header-relative {
+  position: relative;
+  z-index: 100;
+  background-color: #015aa6;
+  padding: 1em;
+
+  display: flex;
+  align-items: center;
+
+  .img-logo {
+    width: 100%;
+
+    img {
+      width: 4.8em;
+      display: block;
+    }
+  }
+
+  .item-menu {
+    display: none;
+  }
+
+  .item-menu-button {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ================= DESKTOP ================= */
+@media (min-width: 920px) {
+  .header-relative {
+    max-width: 1530px;
+    margin: auto;
+    padding: 2em;
+
+    /* apaga mobile */
+    .img-logo {
+      display: none;
+    }
+
+    .item-menu-button {
+      display: none; /* 🔥 ESTO ES LO QUE FALTABA */
+    }
+
+    /* enciende desktop */
+    .item-menu {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* columnas simétricas */
+    .menu-left,
+    .menu-right {
+      flex: 1;
+      display: flex;
+    }
+
+    .menu-left {
+      justify-content: flex-end;
+    }
+
+    .menu-right {
+      justify-content: flex-start;
+    }
+
+    .menu-left ul,
+    .menu-right ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 3em;
+      padding: 0;
+      margin: 0;
+
+      li {
+        position: relative;
+
+        a {
+          text-decoration: none;
+          color: #fff;
+          font-size: 1.15em;
+          display: inline-flex;
+          align-items: center;
+          white-space: nowrap;
+        }
+
+        .anchor-icon {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3em;
+          padding: 0.6em 1.3em;
+          border-radius: 6em;
+          font-weight: 600;
+          background-color: #fff;
+          color: #000;
+        }
+      }
+    }
+
+    /* LOGO */
+    .menu-logo {
+      flex-shrink: 0;
+      margin: 0 2.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 6.5em;
+        display: block;
+      }
+    }
+
+    /* SUBMENU */
+    .has-submenu {
+      .submenu {
+        position: absolute;
+        top: 120%;
+        left: 0;
+        display: none;
+        background-color: #015aa6;
+        min-width: 190px;
+        padding: 0.5em 0;
+        border-radius: 0.7em;
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+        z-index: 999;
+      }
+
+      &:hover {
+        .submenu {
+          display: block;
+        }
+      }
+    }
+  }
+}
+</style>
